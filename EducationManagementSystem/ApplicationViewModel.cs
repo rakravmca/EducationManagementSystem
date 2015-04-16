@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Input;
-using EducationManagementSystem.Data;
+﻿using EducationManagementSystem.Data;
 using EducationManagementSystem.HelperClasses;
 using EducationManagementSystem.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace EducationManagementSystem
 {
@@ -20,6 +18,7 @@ namespace EducationManagementSystem
         private ICommand _closeLoginUserCommand;
         private ICommand _loginUserCommand;
         private ICommand _logoutCommand;
+        private ICommand _cancelLoginCommand;
 
         private IPageViewModel _currentPageViewModel;
         private List<IPageViewModel> _pageViewModels;
@@ -31,10 +30,15 @@ namespace EducationManagementSystem
         private string _userDisplayName;
         private bool _isAuntheticated;
 
+        public PasswordBox MyPasswordBox;
+
         #endregion
 
         #region Constructor
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ApplicationViewModel"/> class.
+        /// </summary>
         public ApplicationViewModel()
         {
             // Add available pages
@@ -43,12 +47,20 @@ namespace EducationManagementSystem
 
             // Set starting page
             CurrentPageViewModel = CurrentViewModels[0];
+
+            OpenLoginUserPopup();
         }
 
         #endregion
 
         #region Commands
 
+        /// <summary>
+        /// Gets the change page command.
+        /// </summary>
+        /// <value>
+        /// The change page command.
+        /// </value>
         public ICommand ChangePageCommand
         {
             get
@@ -64,6 +76,12 @@ namespace EducationManagementSystem
             }
         }
 
+        /// <summary>
+        /// Gets the open login user command.
+        /// </summary>
+        /// <value>
+        /// The open login user command.
+        /// </value>
         public ICommand OpenLoginUserCommand
         {
             get
@@ -77,6 +95,12 @@ namespace EducationManagementSystem
             }
         }
 
+        /// <summary>
+        /// Gets the close login user command.
+        /// </summary>
+        /// <value>
+        /// The close login user command.
+        /// </value>
         public ICommand CloseLoginUserCommand
         {
             get
@@ -90,6 +114,12 @@ namespace EducationManagementSystem
             }
         }
 
+        /// <summary>
+        /// Gets the login user command.
+        /// </summary>
+        /// <value>
+        /// The login user command.
+        /// </value>
         public ICommand LoginUserCommand
         {
             get
@@ -105,6 +135,33 @@ namespace EducationManagementSystem
             }
         }
 
+        /// <summary>
+        /// Gets the login user command.
+        /// </summary>
+        /// <value>
+        /// The login user command.
+        /// </value>
+        public ICommand CancelLoginCommand
+        {
+            get
+            {
+                if (_cancelLoginCommand == null)
+                {
+                    _cancelLoginCommand = new RelayCommand(
+                        p => CancelLogin((Object)p),
+                            p => p is Object);
+                }
+
+                return _cancelLoginCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the logout command.
+        /// </summary>
+        /// <value>
+        /// The logout command.
+        /// </value>
         public ICommand LogoutCommand
         {
             get
@@ -123,6 +180,12 @@ namespace EducationManagementSystem
 
         #region Properties
 
+        /// <summary>
+        /// Gets the page view models.
+        /// </summary>
+        /// <value>
+        /// The page view models.
+        /// </value>
         public List<IPageViewModel> PageViewModels
         {
             get
@@ -134,6 +197,12 @@ namespace EducationManagementSystem
             }
         }
 
+        /// <summary>
+        /// Gets the administration view models.
+        /// </summary>
+        /// <value>
+        /// The administration view models.
+        /// </value>
         public List<IPageViewModel> AdministrationViewModels
         {
             get
@@ -145,6 +214,12 @@ namespace EducationManagementSystem
             }
         }
 
+        /// <summary>
+        /// Gets or sets the current view models.
+        /// </summary>
+        /// <value>
+        /// The current view models.
+        /// </value>
         public List<IPageViewModel> CurrentViewModels
         {
             get
@@ -161,6 +236,12 @@ namespace EducationManagementSystem
             }
         }
 
+        /// <summary>
+        /// Gets or sets the current page view model.
+        /// </summary>
+        /// <value>
+        /// The current page view model.
+        /// </value>
         public IPageViewModel CurrentPageViewModel
         {
             get
@@ -177,6 +258,12 @@ namespace EducationManagementSystem
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is login popup open.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is login popup open; otherwise, <c>false</c>.
+        /// </value>
         public bool IsLoginPopupOpen
         {
             get
@@ -193,6 +280,12 @@ namespace EducationManagementSystem
             }
         }
 
+        /// <summary>
+        /// Gets or sets the current user.
+        /// </summary>
+        /// <value>
+        /// The current user.
+        /// </value>
         public User CurrentUser
         {
             get { return _currentUser; }
@@ -206,6 +299,12 @@ namespace EducationManagementSystem
             }
         }
 
+        /// <summary>
+        /// Gets or sets the name of the user.
+        /// </summary>
+        /// <value>
+        /// The name of the user.
+        /// </value>
         public string UserName
         {
             get { return _userName; }
@@ -216,6 +315,12 @@ namespace EducationManagementSystem
             }
         }
 
+        /// <summary>
+        /// Gets or sets the display name of the user.
+        /// </summary>
+        /// <value>
+        /// The display name of the user.
+        /// </value>
         public string UserDisplayName
         {
             get { return _userDisplayName; }
@@ -226,6 +331,12 @@ namespace EducationManagementSystem
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is auntheticated.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is auntheticated; otherwise, <c>false</c>.
+        /// </value>
         public bool IsAuntheticated
         {
             get { return _isAuntheticated; }
@@ -240,6 +351,10 @@ namespace EducationManagementSystem
 
         #region Methods
 
+        /// <summary>
+        /// Changes the view model.
+        /// </summary>
+        /// <param name="viewModel">The view model.</param>
         private void ChangeViewModel(IPageViewModel viewModel)
         {
             if (!PageViewModels.Contains(viewModel))
@@ -249,19 +364,36 @@ namespace EducationManagementSystem
                 .FirstOrDefault(vm => vm == viewModel);
         }
 
+        /// <summary>
+        /// Opens the login user popup.
+        /// </summary>
         private void OpenLoginUserPopup()
         {
             IsLoginPopupOpen = true;
         }
 
+        /// <summary>
+        /// Closes the login user popup.
+        /// </summary>
         private void CloseLoginUserPopup()
         {
+            UserName = string.Empty;
+
+            if (MyPasswordBox != null)
+            {
+                MyPasswordBox.Password = string.Empty;
+            }
+
             IsLoginPopupOpen = false;
         }
 
+        /// <summary>
+        /// Logins the user.
+        /// </summary>
+        /// <param name="objPasswordBox">The object password box.</param>
         private void LoginUser(Object objPasswordBox)
         {
-            PasswordBox pwBox = objPasswordBox as PasswordBox;
+            MyPasswordBox = objPasswordBox as PasswordBox;
 
             using (EducationManagementSystemEntities entities = new EducationManagementSystemEntities())
             {
@@ -269,7 +401,7 @@ namespace EducationManagementSystem
                                where
                                (
                                user.UserName == UserName &&
-                               user.Password == pwBox.Password
+                               user.Password == MyPasswordBox.Password
                                )
                                select user).SingleOrDefault();
             }
@@ -291,6 +423,19 @@ namespace EducationManagementSystem
             }
         }
 
+        /// <summary>
+        /// Cancels the login.
+        /// </summary>
+        /// <param name="objPasswordBox">The object password box.</param>
+        private void CancelLogin(Object objPasswordBox)
+        {
+            MyPasswordBox = objPasswordBox as PasswordBox;
+            CloseLoginUserPopup();
+        }
+
+        /// <summary>
+        /// Logouts this instance.
+        /// </summary>
         private void Logout()
         {
             CurrentUser = null;
@@ -306,6 +451,8 @@ namespace EducationManagementSystem
 
             // Set starting page
             CurrentPageViewModel = CurrentViewModels[0];
+
+            OpenLoginUserPopup();
         }
 
         #endregion
