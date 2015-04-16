@@ -10,3 +10,14 @@ E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\Educat
 E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\EducationManagementSystem.csproj.GenerateResource.Cache
 E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\EducationManagementSystem.exe
 E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\EducationManagementSystem.pdb
+E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\EducationManagementSystem.csprojResolveAssemblyReference.cache
+E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\Views\HomeView.baml
+E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\Views\UserView.baml
+E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\ApplicationView.g.cs
+E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\Views\HomeView.g.cs
+E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\Views\UserView.g.cs
+E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\GeneratedInternalTypeHelper.g.cs
+E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\EducationManagementSystem_MarkupCompile.lref
+E:\Projects\EducationManagementSystem\EducationManagementSystem\bin\Debug\EntityFramework.dll
+E:\Projects\EducationManagementSystem\EducationManagementSystem\bin\Debug\EntityFramework.xml
+E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\ApplicationView.baml
