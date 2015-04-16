@@ -40,21 +40,11 @@
             <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Label Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverter}}" FontWeight="Bold">Welcome:</Label>
                 <Label Content="{Binding UserDisplayName}" FontWeight="Bold"></Label>
-                <Button Content="Login" Margin="2" DockPanel.Dock="Right" Command="{Binding OpenLoginUserCommand}"  Style="{StaticResource LinkButton}" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverterReverse}}"></Button>
                 <Button Content="Logout" Margin="2" DockPanel.Dock="Right" Style="{StaticResource LinkButton}" Command="{Binding LogoutCommand}" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverter}}"></Button>
             </WrapPanel>
         </Border>
         <Border DockPanel.Dock="Top" BorderBrush="Green" BorderThickness="0,0,0,1">
             <WrapPanel Orientation="Horizontal">
-                <!--<Menu IsMainMenu="False">
-                    <MenuItem Header="Home" ItemsSource="{Binding CurrentViewModels}">
-                        <MenuItem.ItemTemplate>
-                            <DataTemplate>
-                                <Button Content="{Binding Name}" Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding }" Style="{StaticResource LinkButton}"/>
-                            </DataTemplate>
-                        </MenuItem.ItemTemplate>
-                    </MenuItem>
-                </Menu>-->
                 <Menu IsMainMenu="True">
                     <MenuItem Header="Administration" ItemsSource="{Binding CurrentViewModels}">
                         <MenuItem.ItemTemplate>
@@ -64,6 +54,7 @@
                         </MenuItem.ItemTemplate>
                     </MenuItem>
                 </Menu>
+                <Button Content="Login" Margin="2" DockPanel.Dock="Right" Command="{Binding OpenLoginUserCommand}"  Style="{StaticResource LinkButton}" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverterReverse}}"></Button>
             </WrapPanel>
         </Border>
         <Border DockPanel.Dock="Top" BorderBrush="Black" BorderThickness="0,0,0,0">
