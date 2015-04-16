@@ -95,10 +95,10 @@
                         <Label Grid.Column="0" Grid.Row="1" Content="Username:"/>
                         <Label Grid.Column="0" Grid.Row="2" Content="Password:"/>
                         <TextBox Grid.Column="1" Grid.Row="1" Margin="3" Text="{Binding Path=UserName}"/>
-                        <PasswordBox Name="MyPasswordBox" Grid.Column="1" Grid.Row="2" Margin="3" />
+                        <PasswordBox Name="MyPasswordBox" Grid.Column="1"  Grid.Row="2" Margin="3" />
                         <WrapPanel Grid.Column="1" Grid.Row="3">
                             <Button Margin="3" Content="Login" Command="{Binding Path=LoginUserCommand}" CommandParameter="{Binding ElementName=MyPasswordBox}" />
-                            <Button Margin="3" Content="Cancel" Command="{Binding Path=CloseLoginUserCommand}" />
+                            <Button Margin="3" Content="Cancel" Command="{Binding Path=CancelLoginCommand}" CommandParameter="{Binding ElementName=MyPasswordBox}" />
                         </WrapPanel>
                     </Grid>
                 </Border>
