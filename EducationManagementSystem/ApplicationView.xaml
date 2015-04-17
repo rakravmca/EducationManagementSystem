@@ -32,24 +32,36 @@
             <Setter Property="Foreground"  Value="Blue" />
             <Style.Triggers>
                 <Trigger  Property="IsMouseOver" Value="true">
-                    <Setter  Property="Foreground" Value="Red" />
+                    <Setter  Property="Foreground" Value="BlueViolet" />
                     <Setter Property="Cursor" Value="Hand" />
                 </Trigger>
             </Style.Triggers>
         </Style>
     </Window.Resources>
     <DockPanel Name="MainPanel">
-        <Border DockPanel.Dock="Top" BorderBrush="Black" BorderThickness="0,0,1,0" Background="Azure">
+        <Border DockPanel.Dock="Top" BorderBrush="#e1cdf9" BorderThickness="0,0,0,1" Background="#f3ebfd">
             <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Label Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverter}}" FontWeight="Bold">Welcome:</Label>
                 <Label Content="{Binding UserDisplayName}" FontWeight="Bold"></Label>
                 <Button Content="Logout" Margin="2" DockPanel.Dock="Right" Style="{StaticResource LinkButton}" Command="{Binding LogoutCommand}" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverter}}"></Button>
             </WrapPanel>
         </Border>
-        <Border DockPanel.Dock="Top" BorderBrush="Green" BorderThickness="0,0,0,1">
+        <Border DockPanel.Dock="Top" BorderBrush="#f3ebfd" BorderThickness="0,0,0,1">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                    <GradientStop Color="#e1cdf9" Offset="0"/>
+                    <GradientStop Color="#FFFFFFFF" Offset="0.567"/>
+                </LinearGradientBrush>
+            </Border.Background>
             <StackPanel Orientation="Horizontal">
                 <Button Content="Home" Margin="2" DockPanel.Dock="Right" Command="{Binding RedirectToHomePageCommand}"  Style="{StaticResource LinkButton}" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverter}}"></Button>
                 <Menu IsMainMenu="True" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverter}}">
+                    <Menu.Background>
+                        <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                            <GradientStop Color="#e1cdf9" Offset="0"/>
+                            <GradientStop Color="#FFFFFFFF" Offset="0.567"/>
+                        </LinearGradientBrush>
+                    </Menu.Background>
                     <MenuItem Header="General" ItemsSource="{Binding UserViewModels}">
                         <MenuItem.ItemTemplate>
                             <DataTemplate>
@@ -59,6 +71,12 @@
                     </MenuItem>
                 </Menu>
                 <Menu IsMainMenu="True" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverter}}">
+                    <Menu.Background>
+                        <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                            <GradientStop Color="#e1cdf9" Offset="0"/>
+                            <GradientStop Color="#FFFFFFFF" Offset="0.567"/>
+                        </LinearGradientBrush>
+                    </Menu.Background>
                     <MenuItem Header="Administration" ItemsSource="{Binding AdministratiorViewModels}">
                         <MenuItem.ItemTemplate>
                             <DataTemplate>
@@ -71,12 +89,6 @@
             </StackPanel>
         </Border>
         <Border DockPanel.Dock="Top" BorderBrush="Black" BorderThickness="0,0,0,0">
-            <Border.Background>
-                <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
-                    <GradientStop Color="Azure" Offset="0"/>
-                    <GradientStop Color="#FFFFFFFF" Offset="0.567"/>
-                </LinearGradientBrush>
-            </Border.Background>
             <ContentControl Content="{Binding CurrentPageViewModel}" />
         </Border>
         <Popup Name="LoginPopup" IsOpen="{Binding Path=IsLoginPopupOpen}" Placement="Center" PlacementTarget="{Binding ElementName = MainPanel}" PopupAnimation="Fade">
