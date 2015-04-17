@@ -18,12 +18,14 @@
 
         <HelperClasses:BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
         <HelperClasses:BooleanToVisibilityConverter x:Key="BoolToVisConverterReverse" Reverse="True"/>
+        <HelperClasses:BooleanToVisibilityConverter x:Key="BoolToVisConverterCollapse" Collapse="True"/>
+        <HelperClasses:BooleanToVisibilityConverter x:Key="BoolToVisConverterCollapseReverse" Collapse="True" Reverse="True"/>
 
         <Style x:Key="LinkButton" TargetType="Button">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <TextBlock FontWeight="Bold">
+                        <TextBlock FontWeight="Normal">
                             <ContentPresenter />
                         </TextBlock>
                     </ControlTemplate>
@@ -54,13 +56,19 @@
             <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Label Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverter}}" FontWeight="Bold">Welcome:</Label>
                 <Label Content="{Binding UserDisplayName}" FontWeight="Bold"></Label>
-                <Button Content="Logout" Margin="2" DockPanel.Dock="Right" Style="{StaticResource LinkButton}" Command="{Binding LogoutCommand}" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverter}}"></Button>
+
+                <Button Margin="0,5,5,0" DockPanel.Dock="Right" Command="{Binding OpenLoginUserCommand}"  Style="{StaticResource LinkButton}" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverterCollapseReverse}}">
+                    <TextBlock>Login</TextBlock>
+                </Button>
+                <Button Margin="0,5,5,0" DockPanel.Dock="Right" Style="{StaticResource LinkButton}" Command="{Binding LogoutCommand}" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverterCollapse}}">
+                    <TextBlock>Logout</TextBlock>
+                </Button>
             </WrapPanel>
         </Border>
         <Border DockPanel.Dock="Top" BorderBrush="#f3ebfd" BorderThickness="0,0,0,1" Background="{StaticResource VioletGardientBrush}">
             <StackPanel Orientation="Horizontal">
-                <Button Content="Home" Margin="2" DockPanel.Dock="Right" Command="{Binding RedirectToHomePageCommand}"  Style="{StaticResource LinkButton}" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverter}}"></Button>
-                <Menu IsMainMenu="True" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverter}}" Background="{StaticResource VioletGardientBrush}">
+                <Button Content="Home" Margin="2" DockPanel.Dock="Right" Command="{Binding RedirectToHomePageCommand}"  Style="{StaticResource LinkButton}" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverterCollapse}}"></Button>
+                <Menu IsMainMenu="True" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverterCollapse}}" Background="{StaticResource VioletGardientBrush}">
                     <MenuItem Header="General" ItemsSource="{Binding UserViewModels}">
                         <MenuItem.ItemTemplate>
                             <DataTemplate>
@@ -69,7 +77,7 @@
                         </MenuItem.ItemTemplate>
                     </MenuItem>
                 </Menu>
-                <Menu IsMainMenu="True" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverter}}" Background="{StaticResource VioletGardientBrush}">
+                <Menu IsMainMenu="True" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverterCollapse}}" Background="{StaticResource VioletGardientBrush}">
                     <MenuItem Header="Administration" ItemsSource="{Binding AdministratiorViewModels}">
                         <MenuItem.ItemTemplate>
                             <DataTemplate>
@@ -78,7 +86,6 @@
                         </MenuItem.ItemTemplate>
                     </MenuItem>
                 </Menu>
-                <Button Content="Login" Margin="2" DockPanel.Dock="Right" Command="{Binding OpenLoginUserCommand}"  Style="{StaticResource LinkButton}" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverterReverse}}"></Button>
             </StackPanel>
         </Border>
         <Border DockPanel.Dock="Top" BorderBrush="Black" BorderThickness="0,0,0,0">
@@ -93,19 +100,31 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="200" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Grid.Row="0" Content="User Login:" FontWeight="Bold" Foreground="Purple"/>
-                        <Label Grid.Column="0" Grid.Row="1" Content="Username:"/>
-                        <Label Grid.Column="0" Grid.Row="2" Content="Password:"/>
-                        <TextBox Grid.Column="1" Grid.Row="1" Margin="3" Text="{Binding Path=UserName}"/>
-                        <PasswordBox Name="MyPasswordBox" Grid.Column="1"  Grid.Row="2" Margin="3" />
-                        <WrapPanel Grid.Column="1" Grid.Row="3">
+                        <Label Grid.Column="1" Grid.Row="1" Foreground="Red"  Visibility="{Binding LoginError, Converter={StaticResource BoolToVisConverterCollapse}}">
+                            <TextBlock>
+                                Username/Password are incorrect.
+                                <LineBreak></LineBreak> 
+                                Please try again or 
+                                <Button Command="{Binding OpenLoginUserCommand}"  Style="{StaticResource LinkButton}">
+                                    <TextBlock>Register</TextBlock>
+                                </Button>
+                            </TextBlock>
+                        </Label>
+                        <Label Grid.Column="0" Grid.Row="2" Content="Username:"/>
+                        <Label Grid.Column="0" Grid.Row="3" Content="Password:"/>
+                        <TextBox Grid.Column="1" Grid.Row="2" Margin="3" Text="{Binding Path=UserName}"/>
+                        <PasswordBox Name="MyPasswordBox" Grid.Column="1"  Grid.Row="3" Margin="3" />
+                        <WrapPanel Grid.Column="1" Grid.Row="4">
                             <Button Margin="3" Content="Login" Command="{Binding Path=LoginUserCommand}" CommandParameter="{Binding ElementName=MyPasswordBox}" />
                             <Button Margin="3" Content="Cancel" Command="{Binding Path=CancelLoginCommand}" CommandParameter="{Binding ElementName=MyPasswordBox}" />
                         </WrapPanel>

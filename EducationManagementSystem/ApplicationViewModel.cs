@@ -30,6 +30,7 @@ namespace EducationManagementSystem
         private string _userName;
         private string _userDisplayName;
         private bool _isAuntheticated;
+        private bool _loginError;
 
         public PasswordBox MyPasswordBox;
 
@@ -372,6 +373,28 @@ namespace EducationManagementSystem
             }
         }
 
+        /// <summary>
+        /// Gets or sets the login error message.
+        /// </summary>
+        /// <value>
+        /// The login error message.
+        /// </value>
+        public bool LoginError
+        {
+            get
+            {
+                return _loginError;
+            }
+            set
+            {
+                if (_loginError != value)
+                {
+                    _loginError = value;
+                    OnPropertyChanged("LoginError");
+                }
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -394,6 +417,14 @@ namespace EducationManagementSystem
         /// </summary>
         private void OpenLoginUserPopup()
         {
+            LoginError = false;
+            UserName = string.Empty;
+
+            if (MyPasswordBox != null)
+            {
+                MyPasswordBox.Password = string.Empty;
+            }
+
             IsLoginPopupOpen = true;
         }
 
@@ -402,13 +433,6 @@ namespace EducationManagementSystem
         /// </summary>
         private void CloseLoginUserPopup()
         {
-            UserName = string.Empty;
-
-            if (MyPasswordBox != null)
-            {
-                MyPasswordBox.Password = string.Empty;
-            }
-
             IsLoginPopupOpen = false;
         }
 
@@ -435,15 +459,19 @@ namespace EducationManagementSystem
             {
                 IsAuntheticated = true;
                 UserDisplayName = (!String.IsNullOrWhiteSpace(CurrentUser.Initial) ? CurrentUser.Initial + " " : string.Empty) +
-                                    CurrentUser.FirstName + " " + (!String.IsNullOrWhiteSpace(CurrentUser.MiddleName) ? CurrentUser.MiddleName + " " : string.Empty) + 
+                                    CurrentUser.FirstName + " " + (!String.IsNullOrWhiteSpace(CurrentUser.MiddleName) ? CurrentUser.MiddleName + " " : string.Empty) +
                                     " " + CurrentUser.LastName;
                 CloseLoginUserPopup();
 
-                UserViewModels = PageViewModels.Where(w=>w.UserType == Enums.UserType.User).ToList();
+                UserViewModels = PageViewModels.Where(w => w.UserType == Enums.UserType.User).ToList();
                 AdministratiorViewModels = PageViewModels.Where(w => w.UserType == Enums.UserType.Admin).ToList();
 
                 // Set starting page
                 RedirectToHomePage();
+            }
+            else
+            {
+                LoginError = true;
             }
         }
 
