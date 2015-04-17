@@ -1,16 +1,27 @@
 ﻿using EducationManagementSystem.HelperClasses;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace EducationManagementSystem.ViewModels
 {
-    public class HomeViewModel : ObservableObject, IPageViewModel
+    class StudentViewModel : ObservableObject, IPageViewModel
     {
         #region Properties
 
+        /// <summary>
+        /// Gets the name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
         public string Name
         {
             get
             {
-                return "Home";
+                return "Students";
             }
         }
 
@@ -24,7 +35,7 @@ namespace EducationManagementSystem.ViewModels
         {
             get
             {
-                return Enums.UserType.Admin;
+                return Enums.UserType.User;
             }
         }
 

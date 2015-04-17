@@ -12,6 +12,9 @@
         <DataTemplate DataType="{x:Type ViewModels:UserViewModel}">
             <Views:UserView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type ViewModels:StudentViewModel}">
+            <Views:StudentView />
+        </DataTemplate>
 
         <HelperClasses:BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
         <HelperClasses:BooleanToVisibilityConverter x:Key="BoolToVisConverterReverse" Reverse="True"/>
@@ -44,9 +47,19 @@
             </WrapPanel>
         </Border>
         <Border DockPanel.Dock="Top" BorderBrush="Green" BorderThickness="0,0,0,1">
-            <WrapPanel Orientation="Horizontal">
-                <Menu IsMainMenu="True">
-                    <MenuItem Header="Administration" ItemsSource="{Binding CurrentViewModels}">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Home" Margin="2" DockPanel.Dock="Right" Command="{Binding RedirectToHomePageCommand}"  Style="{StaticResource LinkButton}" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverter}}"></Button>
+                <Menu IsMainMenu="True" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverter}}">
+                    <MenuItem Header="General" ItemsSource="{Binding UserViewModels}">
+                        <MenuItem.ItemTemplate>
+                            <DataTemplate>
+                                <Button Content="{Binding Name}" Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding }" Style="{StaticResource LinkButton}"/>
+                            </DataTemplate>
+                        </MenuItem.ItemTemplate>
+                    </MenuItem>
+                </Menu>
+                <Menu IsMainMenu="True" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverter}}">
+                    <MenuItem Header="Administration" ItemsSource="{Binding AdministratiorViewModels}">
                         <MenuItem.ItemTemplate>
                             <DataTemplate>
                                 <Button Content="{Binding Name}" Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding }" Style="{StaticResource LinkButton}"/>
@@ -55,7 +68,7 @@
                     </MenuItem>
                 </Menu>
                 <Button Content="Login" Margin="2" DockPanel.Dock="Right" Command="{Binding OpenLoginUserCommand}"  Style="{StaticResource LinkButton}" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverterReverse}}"></Button>
-            </WrapPanel>
+            </StackPanel>
         </Border>
         <Border DockPanel.Dock="Top" BorderBrush="Black" BorderThickness="0,0,0,0">
             <Border.Background>

@@ -21,3 +21,5 @@ E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\Educat
 E:\Projects\EducationManagementSystem\EducationManagementSystem\bin\Debug\EntityFramework.dll
 E:\Projects\EducationManagementSystem\EducationManagementSystem\bin\Debug\EntityFramework.xml
 E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\ApplicationView.baml
+E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\Views\StudentView.baml
+E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\Views\StudentView.g.cs

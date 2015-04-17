@@ -19,11 +19,12 @@ namespace EducationManagementSystem
         private ICommand _loginUserCommand;
         private ICommand _logoutCommand;
         private ICommand _cancelLoginCommand;
+        private ICommand _redirectToHomePageCommand;
 
         private IPageViewModel _currentPageViewModel;
         private List<IPageViewModel> _pageViewModels;
-        private List<IPageViewModel> _currentViewModels;
-        private List<IPageViewModel> _administrationViewModels;
+        private List<IPageViewModel> _userViewModels;
+        private List<IPageViewModel> _administratorViewModels;
         private bool _isLoginPopupOpen;
         private User _currentUser;
         private string _userName;
@@ -41,12 +42,11 @@ namespace EducationManagementSystem
         /// </summary>
         public ApplicationViewModel()
         {
-            // Add available pages
-            PageViewModels.Add(new HomeViewModel());
-            CurrentViewModels = PageViewModels.ToList();
+            //Add Page View Models
+            PageViewModels.Add(new UserViewModel());
+            PageViewModels.Add(new StudentViewModel());
 
-            // Set starting page
-            CurrentPageViewModel = CurrentViewModels[0];
+            RedirectToHomePage();
 
             OpenLoginUserPopup();
         }
@@ -176,6 +176,26 @@ namespace EducationManagementSystem
             }
         }
 
+        /// <summary>
+        /// Gets the redirect to home page command.
+        /// </summary>
+        /// <value>
+        /// The redirect to home page command.
+        /// </value>
+        public ICommand RedirectToHomePageCommand
+        {
+            get
+            {
+                if (_redirectToHomePageCommand == null)
+                {
+                    _redirectToHomePageCommand = new RelayCommand(
+                        p => RedirectToHomePage());
+                }
+
+                return _redirectToHomePageCommand;
+            }
+        }
+
         #endregion
 
         #region Properties
@@ -203,14 +223,19 @@ namespace EducationManagementSystem
         /// <value>
         /// The administration view models.
         /// </value>
-        public List<IPageViewModel> AdministrationViewModels
+        public List<IPageViewModel> AdministratiorViewModels
         {
             get
             {
-                if (_administrationViewModels == null)
-                    _administrationViewModels = PageViewModels.Where(w => !w.Name.Equals("Home")).ToList();
-
-                return _administrationViewModels;
+                return _administratorViewModels;
+            }
+            set
+            {
+                if (_administratorViewModels != value)
+                {
+                    _administratorViewModels = value;
+                    OnPropertyChanged("AdministratiorViewModels");
+                }
             }
         }
 
@@ -220,18 +245,18 @@ namespace EducationManagementSystem
         /// <value>
         /// The current view models.
         /// </value>
-        public List<IPageViewModel> CurrentViewModels
+        public List<IPageViewModel> UserViewModels
         {
             get
             {
-                return _currentViewModels;
+                return _userViewModels;
             }
             set
             {
-                if (_currentViewModels != value)
+                if (_userViewModels != value)
                 {
-                    _currentViewModels = value;
-                    OnPropertyChanged("CurrentViewModels");
+                    _userViewModels = value;
+                    OnPropertyChanged("UserViewModels");
                 }
             }
         }
@@ -414,12 +439,11 @@ namespace EducationManagementSystem
                                     " " + CurrentUser.LastName;
                 CloseLoginUserPopup();
 
-                //PageViewModels.Add(new HomeViewModel());
-                PageViewModels.Add(new UserViewModel());
-                CurrentViewModels = PageViewModels.ToList();
+                UserViewModels = PageViewModels.Where(w=>w.UserType == Enums.UserType.User).ToList();
+                AdministratiorViewModels = PageViewModels.Where(w => w.UserType == Enums.UserType.Admin).ToList();
 
                 // Set starting page
-                CurrentPageViewModel = CurrentViewModels[0];
+                RedirectToHomePage();
             }
         }
 
@@ -442,17 +466,22 @@ namespace EducationManagementSystem
             IsAuntheticated = false;
             UserDisplayName = string.Empty;
 
-            //Clear Page View Model
-            PageViewModels.Clear();
-
-            // Add available pages
-            PageViewModels.Add(new HomeViewModel());
-            CurrentViewModels = PageViewModels.ToList();
+            //Clear Curent View Models
+            UserViewModels.Clear();
+            AdministratiorViewModels.Clear();
 
             // Set starting page
-            CurrentPageViewModel = CurrentViewModels[0];
+            RedirectToHomePage();
 
             OpenLoginUserPopup();
+        }
+
+        /// <summary>
+        /// Redirects to home page.
+        /// </summary>
+        private void RedirectToHomePage()
+        {
+            CurrentPageViewModel = new HomeViewModel();
         }
 
         #endregion
