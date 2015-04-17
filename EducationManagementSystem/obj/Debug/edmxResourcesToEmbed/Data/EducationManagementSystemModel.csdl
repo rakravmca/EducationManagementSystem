@@ -16,5 +16,6 @@
     <Property Name="LastName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
     <Property Name="EmailId" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
     <Property Name="Phone" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Type="Int32" Name="UserType" Nullable="false" />
   </EntityType>
 </Schema>

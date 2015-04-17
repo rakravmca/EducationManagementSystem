@@ -10,8 +10,8 @@ namespace EducationManagementSystem.HelperClasses
     {
         public enum UserType
         {
-            Admin = 0,
-            User = 1
+            User = 0,
+            Admin = 1
         }
     }
 }

@@ -56,7 +56,6 @@
             <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Label Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverter}}" FontWeight="Bold">Welcome:</Label>
                 <Label Content="{Binding UserDisplayName}" FontWeight="Bold"></Label>
-
                 <Button Margin="0,5,5,0" DockPanel.Dock="Right" Command="{Binding OpenLoginUserCommand}"  Style="{StaticResource LinkButton}" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverterCollapseReverse}}">
                     <TextBlock>Login</TextBlock>
                 </Button>
@@ -68,7 +67,7 @@
         <Border DockPanel.Dock="Top" BorderBrush="#f3ebfd" BorderThickness="0,0,0,1" Background="{StaticResource VioletGardientBrush}">
             <StackPanel Orientation="Horizontal">
                 <Button Content="Home" Margin="2" DockPanel.Dock="Right" Command="{Binding RedirectToHomePageCommand}"  Style="{StaticResource LinkButton}" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverterCollapse}}"></Button>
-                <Menu IsMainMenu="True" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverterCollapse}}" Background="{StaticResource VioletGardientBrush}">
+                <Menu IsMainMenu="True" Visibility="{Binding IsUser, Converter={StaticResource BoolToVisConverterCollapse}}" Background="{StaticResource VioletGardientBrush}">
                     <MenuItem Header="General" ItemsSource="{Binding UserViewModels}">
                         <MenuItem.ItemTemplate>
                             <DataTemplate>
@@ -77,7 +76,7 @@
                         </MenuItem.ItemTemplate>
                     </MenuItem>
                 </Menu>
-                <Menu IsMainMenu="True" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverterCollapse}}" Background="{StaticResource VioletGardientBrush}">
+                <Menu IsMainMenu="True" Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisConverterCollapse}}" Background="{StaticResource VioletGardientBrush}">
                     <MenuItem Header="Administration" ItemsSource="{Binding AdministratiorViewModels}">
                         <MenuItem.ItemTemplate>
                             <DataTemplate>

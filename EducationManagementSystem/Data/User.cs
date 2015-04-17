@@ -23,5 +23,6 @@ namespace EducationManagementSystem.Data
         public string LastName { get; set; }
         public string EmailId { get; set; }
         public string Phone { get; set; }
+        public int UserType { get; set; }
     }
 }

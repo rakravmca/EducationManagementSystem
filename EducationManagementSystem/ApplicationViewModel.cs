@@ -30,6 +30,8 @@ namespace EducationManagementSystem
         private string _userName;
         private string _userDisplayName;
         private bool _isAuntheticated;
+        private bool _isAdmin;
+        private bool _isUser;
         private bool _loginError;
 
         public PasswordBox MyPasswordBox;
@@ -395,6 +397,50 @@ namespace EducationManagementSystem
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is admin.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is admin; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsAdmin
+        {
+            get
+            {
+                return _isAdmin;
+            }
+            set
+            {
+                if (_isAdmin != value)
+                {
+                    _isAdmin = value;
+                    OnPropertyChanged("IsAdmin");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is user.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is user; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsUser
+        {
+            get
+            {
+                return _isUser;
+            }
+            set
+            {
+                if (_isUser != value)
+                {
+                    _isUser = value;
+                    OnPropertyChanged("IsUser");
+                }
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -458,6 +504,9 @@ namespace EducationManagementSystem
             if (CurrentUser != null)
             {
                 IsAuntheticated = true;
+                IsAdmin = CurrentUser.UserType == (int)Enums.UserType.Admin;
+                IsUser = CurrentUser.UserType == (int)Enums.UserType.User;
+
                 UserDisplayName = (!String.IsNullOrWhiteSpace(CurrentUser.Initial) ? CurrentUser.Initial + " " : string.Empty) +
                                     CurrentUser.FirstName + " " + (!String.IsNullOrWhiteSpace(CurrentUser.MiddleName) ? CurrentUser.MiddleName + " " : string.Empty) +
                                     " " + CurrentUser.LastName;
@@ -492,6 +541,8 @@ namespace EducationManagementSystem
         {
             CurrentUser = null;
             IsAuntheticated = false;
+            IsAdmin = false;
+            IsUser = false;
             UserDisplayName = string.Empty;
 
             //Clear Curent View Models
