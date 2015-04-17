@@ -37,6 +37,17 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <LinearGradientBrush x:Key="VioletGardientBrush" EndPoint="0.504,1.5" StartPoint="0.504,0.05">
+            <GradientStop Color="#e1cdf9" Offset="0"/>
+            <GradientStop Color="#FFFFFFFF" Offset="0.600"/>
+        </LinearGradientBrush>
+        
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="{StaticResource VioletGardientBrush}"/>
+            <Setter Property="Width" Value="80"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
     </Window.Resources>
     <DockPanel Name="MainPanel">
         <Border DockPanel.Dock="Top" BorderBrush="#e1cdf9" BorderThickness="0,0,0,1" Background="#f3ebfd">
@@ -46,22 +57,10 @@
                 <Button Content="Logout" Margin="2" DockPanel.Dock="Right" Style="{StaticResource LinkButton}" Command="{Binding LogoutCommand}" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverter}}"></Button>
             </WrapPanel>
         </Border>
-        <Border DockPanel.Dock="Top" BorderBrush="#f3ebfd" BorderThickness="0,0,0,1">
-            <Border.Background>
-                <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
-                    <GradientStop Color="#e1cdf9" Offset="0"/>
-                    <GradientStop Color="#FFFFFFFF" Offset="0.567"/>
-                </LinearGradientBrush>
-            </Border.Background>
+        <Border DockPanel.Dock="Top" BorderBrush="#f3ebfd" BorderThickness="0,0,0,1" Background="{StaticResource VioletGardientBrush}">
             <StackPanel Orientation="Horizontal">
                 <Button Content="Home" Margin="2" DockPanel.Dock="Right" Command="{Binding RedirectToHomePageCommand}"  Style="{StaticResource LinkButton}" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverter}}"></Button>
-                <Menu IsMainMenu="True" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverter}}">
-                    <Menu.Background>
-                        <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
-                            <GradientStop Color="#e1cdf9" Offset="0"/>
-                            <GradientStop Color="#FFFFFFFF" Offset="0.567"/>
-                        </LinearGradientBrush>
-                    </Menu.Background>
+                <Menu IsMainMenu="True" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverter}}" Background="{StaticResource VioletGardientBrush}">
                     <MenuItem Header="General" ItemsSource="{Binding UserViewModels}">
                         <MenuItem.ItemTemplate>
                             <DataTemplate>
@@ -70,13 +69,7 @@
                         </MenuItem.ItemTemplate>
                     </MenuItem>
                 </Menu>
-                <Menu IsMainMenu="True" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverter}}">
-                    <Menu.Background>
-                        <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
-                            <GradientStop Color="#e1cdf9" Offset="0"/>
-                            <GradientStop Color="#FFFFFFFF" Offset="0.567"/>
-                        </LinearGradientBrush>
-                    </Menu.Background>
+                <Menu IsMainMenu="True" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverter}}" Background="{StaticResource VioletGardientBrush}">
                     <MenuItem Header="Administration" ItemsSource="{Binding AdministratiorViewModels}">
                         <MenuItem.ItemTemplate>
                             <DataTemplate>
@@ -93,7 +86,7 @@
         </Border>
         <Popup Name="LoginPopup" IsOpen="{Binding Path=IsLoginPopupOpen}" Placement="Center" PlacementTarget="{Binding ElementName = MainPanel}" PopupAnimation="Fade">
             <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
-                <Border BorderBrush="Purple" BorderThickness="1,1,1,1" Background="Bisque">
+                <Border BorderBrush="BlueViolet" BorderThickness="1,1,1,1" Background="#e1cdf9">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
