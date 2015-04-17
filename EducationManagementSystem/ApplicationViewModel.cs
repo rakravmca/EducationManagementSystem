@@ -20,6 +20,8 @@ namespace EducationManagementSystem
         private ICommand _logoutCommand;
         private ICommand _cancelLoginCommand;
         private ICommand _redirectToHomePageCommand;
+        private ICommand _openRegistrationnUserCommand;
+        private ICommand _closeRegistrationnUserCommand;
 
         private IPageViewModel _currentPageViewModel;
         private List<IPageViewModel> _pageViewModels;
@@ -33,6 +35,7 @@ namespace EducationManagementSystem
         private bool _isAdmin;
         private bool _isUser;
         private bool _loginError;
+        private bool _isRegistrationPopupOpen;
 
         public PasswordBox MyPasswordBox;
 
@@ -196,6 +199,32 @@ namespace EducationManagementSystem
                 }
 
                 return _redirectToHomePageCommand;
+            }
+        }
+
+        public ICommand OpenRegistrationnUserCommand
+        {
+            get
+            {
+                if (_openRegistrationnUserCommand == null)
+                {
+                    _openRegistrationnUserCommand = new RelayCommand(
+                        p => OpenRegistrationUserPopup());
+                }
+                return _openRegistrationnUserCommand;
+            }
+        }
+
+        public ICommand CloseRegistrationnUserCommand
+        {
+            get
+            {
+                if (_closeRegistrationnUserCommand == null)
+                {
+                    _closeRegistrationnUserCommand = new RelayCommand(
+                        p => CloseRegistrationUserPopup());
+                }
+                return _closeRegistrationnUserCommand;
             }
         }
 
@@ -441,6 +470,28 @@ namespace EducationManagementSystem
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is registration popup open.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is registration popup open; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsRegistrationPopupOpen
+        {
+            get
+            {
+                return _isRegistrationPopupOpen;
+            }
+            set
+            {
+                if (_isRegistrationPopupOpen != value)
+                {
+                    _isRegistrationPopupOpen = value;
+                    OnPropertyChanged("IsRegistrationPopupOpen");
+                }
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -561,6 +612,22 @@ namespace EducationManagementSystem
         private void RedirectToHomePage()
         {
             CurrentPageViewModel = new HomeViewModel();
+        }
+
+        /// <summary>
+        /// Opens the registration user popup.
+        /// </summary>
+        private void OpenRegistrationUserPopup()
+        {
+            IsRegistrationPopupOpen = true;
+        }
+
+        /// <summary>
+        /// Closes the registration user popup.
+        /// </summary>
+        private void CloseRegistrationUserPopup()
+        {
+            IsRegistrationPopupOpen = false;
         }
 
         #endregion
