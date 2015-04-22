@@ -5,6 +5,6 @@ namespace EducationManagementSystem
     public interface IPageViewModel
     {
         string Name { get; }
-        Enums.UserType UserType { get; }
+        Enums.PageType PageType { get; }
     }
 }

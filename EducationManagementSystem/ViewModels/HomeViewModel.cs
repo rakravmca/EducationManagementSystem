@@ -15,16 +15,16 @@ namespace EducationManagementSystem.ViewModels
         }
 
         /// <summary>
-        /// Gets the type of the user.
+        /// Gets the type of the page.
         /// </summary>
         /// <value>
-        /// The type of the user.
+        /// The type of the page.
         /// </value>
-        public Enums.UserType UserType
+        public Enums.PageType PageType
         {
             get
             {
-                return Enums.UserType.Admin;
+                return Enums.PageType.General;
             }
         }
 

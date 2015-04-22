@@ -23,3 +23,7 @@ E:\Projects\EducationManagementSystem\EducationManagementSystem\bin\Debug\Entity
 E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\ApplicationView.baml
 E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\Views\StudentView.baml
 E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\Views\StudentView.g.cs
+E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\Views\Reports\UserReportView.baml
+E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\Views\Reports\UserReportView.g.cs
+E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\RdlCompile.cache
+E:\Projects\EducationManagementSystem\EducationManagementSystem\obj\Debug\RdlCompile.compiled

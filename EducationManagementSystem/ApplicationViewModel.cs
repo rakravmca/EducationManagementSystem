@@ -1,6 +1,7 @@
 ﻿using EducationManagementSystem.Data;
 using EducationManagementSystem.HelperClasses;
 using EducationManagementSystem.ViewModels;
+using EducationManagementSystem.ViewModels.Reports;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +26,9 @@ namespace EducationManagementSystem
 
         private IPageViewModel _currentPageViewModel;
         private List<IPageViewModel> _pageViewModels;
-        private List<IPageViewModel> _userViewModels;
+        private List<IPageViewModel> _generalViewModels;
         private List<IPageViewModel> _administratorViewModels;
+        private List<IPageViewModel> _reportViewModels;
         private bool _isLoginPopupOpen;
         private User _currentUser;
         private string _userName;
@@ -51,6 +53,7 @@ namespace EducationManagementSystem
             //Add Page View Models
             PageViewModels.Add(new UserViewModel());
             PageViewModels.Add(new StudentViewModel());
+            PageViewModels.Add(new UserReportViewModel());
 
             RedirectToHomePage();
 
@@ -271,24 +274,40 @@ namespace EducationManagementSystem
             }
         }
 
+        public List<IPageViewModel> ReportViewModels
+        {
+            get
+            {
+                return _reportViewModels;
+            }
+            set
+            {
+                if (_reportViewModels != value)
+                {
+                    _reportViewModels = value;
+                    OnPropertyChanged("ReportViewModels");
+                }
+            }
+        }
+
         /// <summary>
         /// Gets or sets the current view models.
         /// </summary>
         /// <value>
         /// The current view models.
         /// </value>
-        public List<IPageViewModel> UserViewModels
+        public List<IPageViewModel> GeneralViewModels
         {
             get
             {
-                return _userViewModels;
+                return _generalViewModels;
             }
             set
             {
-                if (_userViewModels != value)
+                if (_generalViewModels != value)
                 {
-                    _userViewModels = value;
-                    OnPropertyChanged("UserViewModels");
+                    _generalViewModels = value;
+                    OnPropertyChanged("GeneralViewModels");
                 }
             }
         }
@@ -563,8 +582,9 @@ namespace EducationManagementSystem
                                     " " + CurrentUser.LastName;
                 CloseLoginUserPopup();
 
-                UserViewModels = PageViewModels.Where(w => w.UserType == Enums.UserType.User).ToList();
-                AdministratiorViewModels = PageViewModels.Where(w => w.UserType == Enums.UserType.Admin).ToList();
+                GeneralViewModels = PageViewModels.Where(w => w.PageType == Enums.PageType.General).ToList();
+                AdministratiorViewModels = PageViewModels.Where(w => w.PageType == Enums.PageType.Admin).ToList();
+                ReportViewModels = PageViewModels.Where(w => w.PageType == Enums.PageType.Report).ToList();
 
                 // Set starting page
                 RedirectToHomePage();
@@ -597,7 +617,7 @@ namespace EducationManagementSystem
             UserDisplayName = string.Empty;
 
             //Clear Curent View Models
-            UserViewModels.Clear();
+            GeneralViewModels.Clear();
             AdministratiorViewModels.Clear();
 
             // Set starting page

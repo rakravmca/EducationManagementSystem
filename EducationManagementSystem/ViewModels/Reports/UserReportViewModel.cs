@@ -1,8 +1,14 @@
-﻿using EducationManagementSystem.HelperClasses;
+﻿using EducationManagementSystem.Data;
+using EducationManagementSystem.HelperClasses;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace EducationManagementSystem.ViewModels
+namespace EducationManagementSystem.ViewModels.Reports
 {
-    public class UserViewModel : ObservableObject, IPageViewModel
+    class UserReportViewModel : ObservableObject, IPageViewModel
     {
         #region Properties
 
@@ -16,7 +22,7 @@ namespace EducationManagementSystem.ViewModels
         {
             get
             {
-                return "Users";
+                return "User Report";
             }
         }
 
@@ -30,7 +36,7 @@ namespace EducationManagementSystem.ViewModels
         {
             get
             {
-                return Enums.PageType.Admin;
+                return Enums.PageType.Report;
             }
         }
 

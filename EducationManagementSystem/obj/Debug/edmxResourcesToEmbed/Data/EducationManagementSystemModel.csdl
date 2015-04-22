@@ -2,6 +2,7 @@
 <Schema Namespace="EducationManagementSystemModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="EducationManagementSystemEntities" p1:LazyLoadingEnabled="true">
     <EntitySet Name="Users" EntityType="EducationManagementSystemModel.User" />
+    <EntitySet Name="Students" EntityType="EducationManagementSystemModel.Student" />
   </EntityContainer>
   <EntityType Name="User">
     <Key>
@@ -17,5 +18,17 @@
     <Property Name="EmailId" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
     <Property Name="Phone" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Type="Int32" Name="UserType" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="FirstName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="MiddleName" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="LastName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="BirthDate" Nullable="false" Precision="3" />
+    <Property Type="String" Name="Gender" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="Phone" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
 </Schema>

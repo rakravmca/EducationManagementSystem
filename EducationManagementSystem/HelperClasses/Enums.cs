@@ -13,5 +13,12 @@ namespace EducationManagementSystem.HelperClasses
             Admin = 0,
             User = 1
         }
+
+        public enum PageType
+        {
+            Admin = 0,
+            General = 1,
+            Report = 2
+        }
     }
 }

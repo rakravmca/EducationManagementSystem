@@ -1,6 +1,8 @@
 ﻿<Window xmlns:Views="clr-namespace:EducationManagementSystem.Views"  
         xmlns:ViewModels="clr-namespace:EducationManagementSystem.ViewModels"
         xmlns:HelperClasses="clr-namespace:EducationManagementSystem.HelperClasses"
+        xmlns:ReportViews="clr-namespace:EducationManagementSystem.Views.Reports"
+        xmlns:ReportViewModels="clr-namespace:EducationManagementSystem.ViewModels.Reports"
         x:Class="EducationManagementSystem.ApplicationView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -14,6 +16,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type ViewModels:StudentViewModel}">
             <Views:StudentView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type ReportViewModels:UserReportViewModel}">
+            <ReportViews:UserReportView />
         </DataTemplate>
 
         <HelperClasses:BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
@@ -71,7 +76,7 @@
             <StackPanel Orientation="Horizontal">
                 <Button Content="Home" Margin="2" DockPanel.Dock="Right" Command="{Binding RedirectToHomePageCommand}"  Style="{StaticResource LinkButton}" Visibility="{Binding IsAuntheticated, Converter={StaticResource BoolToVisConverterCollapse}}"></Button>
                 <Menu IsMainMenu="True" Visibility="{Binding IsUser, Converter={StaticResource BoolToVisConverterCollapse}}" Background="{StaticResource VioletGardientBrush}">
-                    <MenuItem Header="General" ItemsSource="{Binding UserViewModels}">
+                    <MenuItem Header="General" ItemsSource="{Binding GeneralViewModels}">
                         <MenuItem.ItemTemplate>
                             <DataTemplate>
                                 <Button Content="{Binding Name}" Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding }" Style="{StaticResource LinkButton}"/>
@@ -88,9 +93,18 @@
                         </MenuItem.ItemTemplate>
                     </MenuItem>
                 </Menu>
+                <Menu IsMainMenu="True" Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisConverterCollapse}}" Background="{StaticResource VioletGardientBrush}">
+                    <MenuItem Header="Report" ItemsSource="{Binding ReportViewModels}">
+                        <MenuItem.ItemTemplate>
+                            <DataTemplate>
+                                <Button Content="{Binding Name}" Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding }" Style="{StaticResource LinkButton}"/>
+                            </DataTemplate>
+                        </MenuItem.ItemTemplate>
+                    </MenuItem>
+                </Menu>
             </StackPanel>
         </Border>
-        <Border DockPanel.Dock="Top" BorderBrush="Black" BorderThickness="0,0,0,0">
+        <Border DockPanel.Dock="Top" BorderBrush="Black" BorderThickness="0,0,0,0" Height="660">
             <ContentControl Content="{Binding CurrentPageViewModel}" />
         </Border>
         <Popup Name="LoginPopup" IsOpen="{Binding Path=IsLoginPopupOpen}" Placement="Center" PlacementTarget="{Binding ElementName = MainPanel}" PopupAnimation="Fade">
