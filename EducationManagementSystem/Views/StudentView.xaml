@@ -6,6 +6,25 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
+        <Style x:Key="LinkButton" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <TextBlock FontWeight="Normal">
+                            <ContentPresenter />
+                        </TextBlock>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground"  Value="Blue" />
+            <Style.Triggers>
+                <Trigger  Property="IsMouseOver" Value="true">
+                    <Setter  Property="Foreground" Value="BlueViolet" />
+                    <Setter Property="Cursor" Value="Hand" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
         <LinearGradientBrush x:Key="VioletGardientBrush" EndPoint="0.504,1.5" StartPoint="0.504,0.05">
             <GradientStop Color="#e1cdf9" Offset="0"/>
             <GradientStop Color="#FFFFFFFF" Offset="0.600"/>
@@ -30,26 +49,27 @@
             <WrapPanel Orientation="Vertical">
                 <Label>Student Information</Label>
                 <Button HorizontalAlignment="Left" Command="{Binding Path=AddStudentPopupCommand}">Add</Button>
-                <ListView ItemsSource="{Binding _studentCollection}" IsSynchronizedWithCurrentItem="true" Name="lvUsers">
+                <ListView ItemsSource="{Binding StudentCollection}" IsSynchronizedWithCurrentItem="true" Name="lvUsers">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path=Id}"/>
                             <GridViewColumn Header="FirstName" DisplayMemberBinding="{Binding Path=FirstName}"/>
                             <GridViewColumn Header="MiddleName" DisplayMemberBinding="{Binding Path=MiddleName}"/>
                             <GridViewColumn Header="LastName" DisplayMemberBinding="{Binding Path=LastName}"/>
-                            <GridViewColumn Header="BirthDate" DisplayMemberBinding="{Binding Path=BirthDateString}"/>
-                            <GridViewColumn Header="Gender" DisplayMemberBinding="{Binding Path=GenderName}"/>
+                            <GridViewColumn Header="BirthDate" DisplayMemberBinding="{Binding Path=StringBirthDate}"/>
+                            <GridViewColumn Header="Gender" DisplayMemberBinding="{Binding Path=Gender}"/>
+                            <GridViewColumn Header="Phone" DisplayMemberBinding="{Binding Path=Phone}"/>
                             <GridViewColumn Header="Edit">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Content="Edit" Command="{Binding ElementName=lvUsers, Path=DataContext.EditStudentPopupCommand}" CommandParameter="{Binding }"></Button>
+                                        <Button Content="Edit" Command="{Binding ElementName=lvUsers, Path=DataContext.EditStudentPopupCommand}" CommandParameter="{Binding }" Style="{StaticResource LinkButton}"></Button>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Header="Delete">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Content="Delete"></Button>
+                                        <Button Content="Delete" Style="{StaticResource LinkButton}"></Button>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -95,11 +115,11 @@
                         <Label Grid.Column="0" Grid.Row="5" Content="Gender:"/>
                         <Label Grid.Column="0" Grid.Row="6" Content="Phone:"/>
                         <TextBox Grid.Column="1" Grid.Row="1" Margin="3" Text="{Binding CurrentStudent.FirstName, ValidatesOnDataErrors=True}"/>
-                        <TextBox Grid.Column="1" Grid.Row="2" Margin="3"/>
-                        <TextBox Grid.Column="1" Grid.Row="3" Margin="3"/>
-                        <TextBox Grid.Column="1" Grid.Row="4" Margin="3"/>
-                        <TextBox Grid.Column="1" Grid.Row="5" Margin="3"/>
-                        <TextBox Grid.Column="1" Grid.Row="6" Margin="3"/>
+                        <TextBox Grid.Column="1" Grid.Row="2" Margin="3" Text="{Binding CurrentStudent.MiddleName, ValidatesOnDataErrors=True}"/>
+                        <TextBox Grid.Column="1" Grid.Row="3" Margin="3" Text="{Binding CurrentStudent.LastName, ValidatesOnDataErrors=True}"/>
+                        <TextBox Grid.Column="1" Grid.Row="4" Margin="3" Text="{Binding CurrentStudent.StringBirthDate, ValidatesOnDataErrors=True}"/>
+                        <TextBox Grid.Column="1" Grid.Row="5" Margin="3" Text="{Binding CurrentStudent.Gender, ValidatesOnDataErrors=True}"/>
+                        <TextBox Grid.Column="1" Grid.Row="6" Margin="3" Text="{Binding CurrentStudent.Phone, ValidatesOnDataErrors=True}"/>
                         <WrapPanel Grid.Column="1" Grid.Row="7">
                             <Button Margin="3" Content="Save" Command="{Binding Path=SaveStudentCommand}" />
                             <Button Margin="3" Content="Cancel" Command="{Binding Path=CloseStudentPopupCommand}" />

@@ -20,6 +20,9 @@ namespace EducationManagementSystem.Model
         private string _gender { get; set; }
         private string _phone { get; set; }
 
+        //This dictionary contains a list of our validation errors for each field
+        private Dictionary<string, string> validationErrors = new Dictionary<string, string>();
+
         #endregion
 
         #region Properties
@@ -111,6 +114,7 @@ namespace EducationManagementSystem.Model
                 }
             }
         }
+
         /// <summary>
         /// Gets or sets the birth date.
         /// </summary>
@@ -132,6 +136,23 @@ namespace EducationManagementSystem.Model
                 }
             }
         }
+
+        public String StringBirthDate
+        {
+            get
+            {
+                return _birthDate.ToShortDateString();
+            }
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    _birthDate = DateTime.Parse(value);
+                    OnPropertyChanged("StringBirthDate");
+                }
+            }
+        }
+
         /// <summary>
         /// Gets or sets the gender.
         /// </summary>
@@ -153,6 +174,7 @@ namespace EducationManagementSystem.Model
                 }
             }
         }
+
         /// <summary>
         /// Gets or sets the phone.
         /// </summary>
@@ -178,6 +200,17 @@ namespace EducationManagementSystem.Model
         #endregion
 
         /// <summary>
+        /// Gets a value indicating whether this instance has errors.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance has errors; otherwise, <c>false</c>.
+        /// </value>
+        public virtual bool HasErrors
+        {
+            get { return (validationErrors.Count > 0); }
+        }
+
+        /// <summary>
         /// Gets an error message indicating what is wrong with this object.
         /// </summary>
         /// <exception cref="System.NotImplementedException"></exception>
@@ -185,6 +218,31 @@ namespace EducationManagementSystem.Model
         public string Error
         {
             get { throw new NotImplementedException(); }
+        }
+
+        /// <summary>
+        /// Adds the error.
+        /// </summary>
+        /// <param name="columnName">Name of the column.</param>
+        /// <param name="msg">The MSG.</param>
+        private void AddError(string columnName, string msg)
+        {
+            if (!validationErrors.ContainsKey(columnName))
+            {
+                validationErrors.Add(columnName, msg);
+            }
+        }
+
+        /// <summary>
+        /// Removes the error.
+        /// </summary>
+        /// <param name="columnName">Name of the column.</param>
+        private void RemoveError(string columnName)
+        {
+            if (validationErrors.ContainsKey(columnName))
+            {
+                validationErrors.Remove(columnName);
+            }
         }
 
         /// <summary>
@@ -197,12 +255,52 @@ namespace EducationManagementSystem.Model
             get
             {
                 string result = string.Empty;
+
                 switch (columnName)
                 {
-                    case "FirstName": if (string.IsNullOrEmpty(FirstName)) result = "First Name is required!"; break;
-                    case "LastName": if (string.IsNullOrEmpty(LastName)) result = "Last Name is required!"; break;
-                    case "Gender": if (string.IsNullOrEmpty(Gender)) result = "Gender is required!"; break;
+                    case "FirstName":
+                        if (string.IsNullOrEmpty(FirstName))
+                        {
+                            result = "First Name is required!";
+                            AddError(columnName, result);
+                        }
+                        else
+                        {
+                            RemoveError(columnName);
+                        }
+                        break;
+                    case "LastName": 
+                        if (string.IsNullOrEmpty(LastName)) {
+                            result = "Last Name is required!"; 
+                            AddError(columnName, result);
+                        }
+                        else
+                        {
+                            RemoveError(columnName);
+                        }
+                        break;
+                    case "Gender": 
+                        if (string.IsNullOrEmpty(Gender)) {
+                            result = "Gender is required!"; 
+                            AddError(columnName, result);
+                        }
+                        else
+                        {
+                            RemoveError(columnName);
+                        }
+                        break;
+                    case "StringBirthDate": 
+                        if (string.IsNullOrWhiteSpace(StringBirthDate)) {
+                            result = "Date Of Birth is required!"; 
+                            AddError(columnName, result);
+                        }
+                        else
+                        {
+                            RemoveError(columnName);
+                        }
+                        break;
                 };
+
                 return result;
             }
         }
